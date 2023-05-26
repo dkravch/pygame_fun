@@ -82,28 +82,24 @@ class ImpossibleBeautyShowElements(Canva):
                 delta_x = sum(distort_x[0:j])
                 delta_y = sum(distort_y[0:i])
 
-                if (i+j) % 2 == 0:
+                if (i + j) % 2 == 0:
 
-                    self.fill_poly(
-                        j*CELL_WIDTH+delta_x,
-                        i*CELL_HEIGHT+delta_y,
-                        CELL_WIDTH+distort_x[j],
-                        CELL_HEIGHT+distort_y[i],
-                        BLUE
-                    )
+                    self.fill_poly(j * CELL_WIDTH + delta_x,
+                                   i * CELL_HEIGHT + delta_y,
+                                   CELL_WIDTH + distort_x[j],
+                                   CELL_HEIGHT + distort_y[i],
+                                   BLUE)
                 else:
 
-                    self.fill_poly(
-                        j*CELL_WIDTH+delta_x,
-                        i*CELL_HEIGHT+delta_y,
-                        CELL_WIDTH+distort_x[j],
-                        CELL_HEIGHT+distort_y[i],
-                        GREEN
-                    )
+                    self.fill_poly(j * CELL_WIDTH + delta_x,
+                                   i * CELL_HEIGHT + delta_y,
+                                   CELL_WIDTH + distort_x[j],
+                                   CELL_HEIGHT + distort_y[i],
+                                   GREEN)
         self.win.update()
 
     def add_sparks_over(self):
-        """ Place yellow sparks over green-blue cells picture """
+        """ Place yellow sparks over green-blue cells """
         for i in range(VERTICAL_CELLS_NUMBER):
             for j in range(VERTICAL_CELLS_NUMBER):
                 self.fill_poly(j * CELL_WIDTH + 2,
