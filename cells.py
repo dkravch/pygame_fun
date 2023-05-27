@@ -23,6 +23,7 @@ RED = (255, 0, 0)
 class Canva:
 
     def __init__(self):
+
         self.win = pygcurse.PygcurseWindow(CELL_WIDTH * HORIZONTAL_CELLS_NUMBER,
                                            CELL_HEIGHT * VERTICAL_CELLS_NUMBER,
                                            fullscreen=False)
@@ -30,9 +31,9 @@ class Canva:
         self.win.autowindowupdate = False
         self.win.autoupdate = False
 
-    def fill_poly(self, x, y, w, h, color):
-        for i in range(y, y + h):
-            for j in range(x, x+w):
+    def fill_poly(self, x, y, width, height, color):
+        for i in range(y, y + height):
+            for j in range(x, x + width):
                 self.win.paint(j, i, color)
 
 ########################################################################################################################
@@ -45,21 +46,17 @@ class ImpossibleBeautyShowElements(Canva):
         for i in range(VERTICAL_CELLS_NUMBER):
             for z in range(CELL_HEIGHT):
                 for j in range(HORIZONTAL_CELLS_NUMBER):
+                    for w in range(CELL_WIDTH + random.randint(0, 3)):
 
-                    for w in range(CELL_WIDTH+random.randint(0, 3)):
-
-                        self.win.cursor = (j*CELL_WIDTH+w, i*CELL_HEIGHT+z)
+                        self.win.cursor = (j * CELL_WIDTH + w, i * CELL_HEIGHT + z)
                         if (i+j) % 2 == 0:
-                            self.win.paint(j*CELL_WIDTH+w+random.randint(0, 1),
-                                           i*CELL_HEIGHT+z+random.randint(0, 1),
+                            self.win.paint(j * CELL_WIDTH + w + random.randint(0, 1),
+                                           i * CELL_HEIGHT + z + random.randint(0, 1),
                                            GREEN)
-                            print("*")
                         else:
-                            self.win.paint(j*CELL_WIDTH+w+random.randint(0, 3),
-                                           i*CELL_HEIGHT+z+random.randint(0, 3),
+                            self.win.paint(j * CELL_WIDTH + w + random.randint(0, 3),
+                                           i * CELL_HEIGHT + z + random.randint(0, 3),
                                            BLUE)
-                            print('-')
-                print("\n")
         self.win.update()
 
     def stage_two(self):
@@ -113,18 +110,11 @@ class ImpossibleBeautyShowElements(Canva):
 
 
 def main():
-    win = pygcurse.PygcurseWindow(CELL_WIDTH * HORIZONTAL_CELLS_NUMBER,
-                                  CELL_HEIGHT * VERTICAL_CELLS_NUMBER,
-                                  fullscreen=False)
-    pygame.display.set_caption('CELLS')
-    win.autowindowupdate = False
-    win.autoupdate = False
 
     obj = ImpossibleBeautyShowElements()
 
     # Show initial picture
     obj.stage_one()
-    win.update()
 
     # Handle keyboard input
     while True:
@@ -135,9 +125,11 @@ def main():
             elif event.type == KEYDOWN:
                 if event.key == K_SPACE:
                     obj.stage_two()
+                    obj.win.update()
 
                 elif event.key == K_TAB:
                     obj.add_sparks_over()
+                    obj.win.update()
 
                 elif event.key == K_ESCAPE:
                     sys.exit()
